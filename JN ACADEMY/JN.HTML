@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jag Narayan Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1a3e;
+    --gold: #c8972a;
+    --gold-light: #f0c060;
+    --cream: #fdf8f0;
+    --white: #ffffff;
+    --gray: #6b7280;
+    --light-bg: #f4f7fc;
+    --shadow: 0 8px 40px rgba(10,26,62,0.10);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; left:0; width:100%; z-index:100;
+    background: rgba(10,26,62,0.97); backdrop-filter: blur(12px);
+    box-shadow: 0 2px 24px rgba(10,26,62,0.18);
+  }
+  .nav-inner {
+    max-width:1200px; margin:0 auto; padding: 0 24px;
+    display:flex; align-items:center; justify-content:space-between; height:68px;
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo .emblem {
+    width:44px; height:44px; background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-weight:900; color:var(--navy); font-size:18px;
+    box-shadow: 0 2px 12px rgba(200,151,42,0.4);
+  }
+  .nav-logo .logo-text { color:var(--white); }
+  .nav-logo .logo-text .top { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; letter-spacing:1px; }
+  .nav-logo .logo-text .sub { font-size:10px; color:var(--gold-light); letter-spacing:2px; text-transform:uppercase; }
+  .nav-links { display:flex; gap:8px; align-items:center; }
+  .nav-links a {
+    color:rgba(255,255,255,0.82); text-decoration:none; font-size:13.5px; font-weight:500;
+    padding:6px 14px; border-radius:8px; transition:all 0.2s;
+  }
+  .nav-links a:hover { background:rgba(200,151,42,0.18); color:var(--gold-light); }
+  .nav-links .btn-admit {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy) !important; font-weight:700; padding:8px 20px; border-radius:24px;
+    box-shadow: 0 2px 12px rgba(200,151,42,0.35);
+  }
+  .nav-links .btn-admit:hover { transform:translateY(-1px); box-shadow:0 4px 20px rgba(200,151,42,0.5); background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { width:24px; height:2px; background:var(--white); border-radius:2px; transition:all 0.3s; }
+
+  /* HERO */
+  #home {
+    min-height: 100vh; background: linear-gradient(135deg, var(--navy) 0%, #162a5e 60%, #0f2050 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; padding: 100px 24px 60px;
+  }
+  #home::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(200,151,42,0.10) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,151,42,0.07) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display:inline-block; background:rgba(200,151,42,0.15); border:1px solid rgba(200,151,42,0.4);
+    color:var(--gold-light); font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+    padding:7px 20px; border-radius:24px; margin-bottom:28px; animation:fadeUp 0.7s ease both;
+  }
+  .hero-title {
+    font-family:'Playfair Display',serif; color:var(--white); text-align:center;
+    font-size:clamp(36px,6vw,72px); font-weight:900; line-height:1.1;
+    animation:fadeUp 0.7s 0.15s ease both;
+  }
+  .hero-title span { color:var(--gold-light); }
+  .hero-sub {
+    color:rgba(255,255,255,0.72); font-size:17px; text-align:center; max-width:560px;
+    margin:20px auto 40px; line-height:1.7; font-weight:300;
+    animation:fadeUp 0.7s 0.3s ease both;
+  }
+  .hero-btns { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; animation:fadeUp 0.7s 0.45s ease both; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color:var(--navy); font-weight:700; padding:14px 32px; border-radius:32px;
+    text-decoration:none; font-size:15px; box-shadow:0 4px 24px rgba(200,151,42,0.4);
+    transition:all 0.25s; border:none; cursor:pointer;
+  }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(200,151,42,0.55); }
+  .btn-outline {
+    background:transparent; color:var(--white); font-weight:600; padding:14px 32px; border-radius:32px;
+    text-decoration:none; font-size:15px; border:1.5px solid rgba(255,255,255,0.35);
+    transition:all 0.25s; cursor:pointer;
+  }
+  .btn-outline:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.6); }
+  .hero-stats {
+    display:flex; gap:48px; margin-top:64px; animation:fadeUp 0.7s 0.6s ease both;
+    flex-wrap:wrap; justify-content:center;
+  }
+  .stat { text-align:center; }
+  .stat .num { font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold-light); }
+  .stat .lbl { font-size:12px; color:rgba(255,255,255,0.55); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+  .hero-wave { position:absolute; bottom:-1px; left:0; width:100%; }
+
+  /* SECTIONS */
+  section { padding:80px 24px; }
+  .container { max-width:1200px; margin:0 auto; }
+  .section-label { font-size:12px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(28px,4vw,44px); font-weight:700; color:var(--navy); margin-bottom:16px; }
+  .section-desc { color:var(--gray); font-size:16px; line-height:1.7; max-width:560px; }
+
+  /* ABOUT */
+  #about { background:var(--white); }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-top:48px; }
+  .about-card {
+    background:linear-gradient(135deg, var(--navy), #1a2e6e);
+    border-radius:24px; padding:48px; color:var(--white); position:relative; overflow:hidden;
+  }
+  .about-card::before {
+    content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px;
+    background:rgba(200,151,42,0.12); border-radius:50%;
+  }
+  .about-card h3 { font-family:'Playfair Display',serif; font-size:26px; margin-bottom:16px; color:var(--gold-light); }
+  .about-card p { color:rgba(255,255,255,0.8); line-height:1.8; font-size:15px; }
+  .about-features { display:flex; flex-direction:column; gap:20px; }
+  .feature-item { display:flex; gap:16px; align-items:flex-start; }
+  .feature-icon { width:44px; height:44px; background:linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .feature-item h4 { font-weight:600; color:var(--navy); margin-bottom:4px; font-size:15px; }
+  .feature-item p { color:var(--gray); font-size:14px; line-height:1.6; }
+
+  /* PRINCIPAL */
+  #principal { background:var(--light-bg); }
+  .principal-card {
+    background:var(--white); border-radius:24px; padding:40px 48px; display:flex; gap:48px;
+    align-items:center; box-shadow:var(--shadow); max-width:900px; margin:48px auto 0;
+  }
+  .principal-avatar {
+    width:140px; height:140px; border-radius:50%; flex-shrink:0;
+    background:linear-gradient(135deg, var(--navy), #1a3a7a);
+    display:flex; align-items:center; justify-content:center; font-size:56px;
+    box-shadow:0 8px 32px rgba(10,26,62,0.18); border:4px solid var(--gold);
+  }
+  .principal-info blockquote { font-family:'Playfair Display',serif; font-size:18px; color:var(--navy); line-height:1.7; font-style:italic; margin-bottom:20px; }
+  .principal-info .name { font-weight:700; color:var(--navy); font-size:17px; }
+  .principal-info .role { color:var(--gold); font-size:13px; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
+
+  /* TEACHERS */
+  #teachers { background:var(--white); }
+  .teachers-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:24px; margin-top:48px; }
+  .teacher-card {
+    background:var(--cream); border-radius:20px; padding:28px 20px; text-align:center;
+    border:1.5px solid rgba(10,26,62,0.07); transition:all 0.25s; cursor:default;
+  }
+  .teacher-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--gold); }
+  .teacher-avatar {
+    width:80px; height:80px; border-radius:50%; margin:0 auto 16px;
+    background:linear-gradient(135deg, var(--navy), #2a4a9e);
+    display:flex; align-items:center; justify-content:center; font-size:32px;
+    border:3px solid var(--gold);
+  }
+  .teacher-card h4 { font-weight:700; color:var(--navy); font-size:15px; margin-bottom:4px; }
+  .teacher-card .subject { color:var(--gold); font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+  .teacher-card .exp { color:var(--gray); font-size:13px; }
+
+  /* SYLLABUS */
+  #syllabus { background:var(--light-bg); }
+  .syllabus-tabs { display:flex; gap:8px; flex-wrap:wrap; margin:32px 0 24px; }
+  .tab-btn {
+    padding:8px 20px; border-radius:24px; border:1.5px solid rgba(10,26,62,0.15);
+    background:var(--white); color:var(--navy); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;
+  }
+  .tab-btn.active { background:var(--navy); color:var(--white); border-color:var(--navy); }
+  .tab-btn:hover:not(.active) { border-color:var(--gold); color:var(--gold); }
+  .syllabus-content { display:none; }
+  .syllabus-content.active { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; animation:fadeUp 0.3s ease; }
+  .subject-card {
+    background:var(--white); border-radius:16px; padding:20px 22px;
+    display:flex; align-items:center; gap:14px; box-shadow:0 2px 12px rgba(10,26,62,0.06);
+    border-left:4px solid var(--gold); transition:all 0.2s;
+  }
+  .subject-card:hover { transform:translateX(4px); box-shadow:0 4px 20px rgba(10,26,62,0.10); }
+  .subject-card .icon { font-size:24px; }
+  .subject-card .info .name { font-weight:600; color:var(--navy); font-size:14px; }
+  .subject-card .info .detail { color:var(--gray); font-size:12px; margin-top:2px; }
+  .upload-area {
+    margin-top:32px; border:2px dashed rgba(10,26,62,0.2); border-radius:16px; padding:32px;
+    text-align:center; background:var(--white); cursor:pointer; transition:all 0.2s;
+  }
+  .upload-area:hover { border-color:var(--gold); background:rgba(200,151,42,0.03); }
+  .upload-area .upload-icon { font-size:40px; margin-bottom:12px; }
+  .upload-area h4 { color:var(--navy); font-weight:600; margin-bottom:6px; }
+  .upload-area p { color:var(--gray); font-size:14px; }
+  .upload-area input { display:none; }
+
+  /* EXAMS */
+  #exams { background:var(--white); }
+  .exam-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; margin-top:48px; }
+  .exam-card {
+    background:var(--light-bg); border-radius:20px; padding:28px; border-top:4px solid var(--gold);
+    transition:all 0.25s;
+  }
+  .exam-card:hover { transform:translateY(-3px); box-shadow:var(--shadow); }
+  .exam-card .exam-type { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+  .exam-card h3 { font-family:'Playfair Display',serif; font-size:20px; color:var(--navy); margin-bottom:16px; }
+  .exam-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:10px; font-size:14px; }
+  .exam-row .lbl { color:var(--gray); min-width:100px; font-size:13px; }
+  .exam-row .val { color:var(--navy); font-weight:500; }
+  .classes-tag { display:inline-block; background:rgba(10,26,62,0.08); color:var(--navy); font-size:12px; font-weight:600; padding:4px 12px; border-radius:20px; margin-top:8px; }
+
+  /* ADMISSION FORM */
+  #admission { background:linear-gradient(135deg, var(--navy) 0%, #1a2e6e 100%); }
+  #admission .section-label { color:var(--gold-light); }
+  #admission .section-title { color:var(--white); }
+  #admission .section-desc { color:rgba(255,255,255,0.65); }
+  .form-card { background:var(--white); border-radius:24px; padding:40px; margin-top:48px; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+  .form-step-indicator { display:flex; gap:0; margin-bottom:36px; }
+  .step-item { flex:1; display:flex; align-items:center; }
+  .step-circle {
+    width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:14px; flex-shrink:0; transition:all 0.3s;
+    background:var(--light-bg); color:var(--gray); border:2px solid rgba(10,26,62,0.1);
+  }
+  .step-circle.active { background:var(--navy); color:var(--white); border-color:var(--navy); }
+  .step-circle.done { background:var(--gold); color:var(--white); border-color:var(--gold); }
+  .step-label { font-size:12px; font-weight:600; color:var(--gray); margin-left:10px; }
+  .step-label.active { color:var(--navy); }
+  .step-line { flex:1; height:2px; background:rgba(10,26,62,0.1); margin:0 8px; }
+  .form-group { margin-bottom:20px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  label { display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+  input[type=text], input[type=email], input[type=tel], input[type=date], input[type=number], select, textarea {
+    width:100%; padding:12px 16px; border-radius:10px; border:1.5px solid rgba(10,26,62,0.15);
+    font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); background:var(--light-bg);
+    transition:all 0.2s; outline:none;
+  }
+  input:focus, select:focus, textarea:focus { border-color:var(--gold); background:var(--white); box-shadow:0 0 0 3px rgba(200,151,42,0.12); }
+  textarea { resize:vertical; min-height:90px; }
+  .form-section-title { font-family:'Playfair Display',serif; font-size:18px; color:var(--navy); margin:24px 0 16px; padding-bottom:10px; border-bottom:2px solid var(--light-bg); }
+  .form-page { display:none; }
+  .form-page.active { display:block; animation:fadeUp 0.3s ease; }
+  .form-nav { display:flex; justify-content:space-between; margin-top:32px; gap:16px; }
+  .btn-form-next, .btn-form-prev {
+    padding:12px 32px; border-radius:32px; font-weight:700; font-size:15px; cursor:pointer; border:none; transition:all 0.2s;
+  }
+  .btn-form-next { background:linear-gradient(135deg, var(--navy), #1a3a7a); color:var(--white); }
+  .btn-form-next:hover { transform:translateY(-1px); box-shadow:0 4px 20px rgba(10,26,62,0.3); }
+  .btn-form-prev { background:var(--light-bg); color:var(--navy); }
+
+  /* PAYMENT */
+  #payment { background:var(--light-bg); }
+  .payment-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:48px; align-items:start; }
+  .payment-form-card { background:var(--white); border-radius:24px; padding:36px; box-shadow:var(--shadow); }
+  .payment-form-card h3 { font-family:'Playfair Display',serif; font-size:22px; color:var(--navy); margin-bottom:24px; }
+  .fee-types { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+  .fee-type-btn {
+    padding:14px 12px; border-radius:12px; border:1.5px solid rgba(10,26,62,0.15);
+    text-align:center; cursor:pointer; transition:all 0.2s; background:var(--light-bg);
+  }
+  .fee-type-btn.active { border-color:var(--navy); background:rgba(10,26,62,0.05); }
+  .fee-type-btn .ficon { font-size:22px; margin-bottom:6px; }
+  .fee-type-btn .fname { font-size:12px; font-weight:600; color:var(--navy); }
+  .payment-methods { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+  .pm-btn {
+    flex:1; min-width:80px; padding:10px; border-radius:10px; border:1.5px solid rgba(10,26,62,0.15);
+    text-align:center; cursor:pointer; transition:all 0.2s; background:var(--white); font-size:13px; font-weight:600; color:var(--navy);
+  }
+  .pm-btn.active { border-color:var(--gold); background:rgba(200,151,42,0.06); color:var(--gold); }
+  .secure-badge { display:flex; align-items:center; gap:8px; color:var(--gray); font-size:12px; margin-top:16px; }
+  .payment-summary { background:linear-gradient(135deg, var(--navy), #1a3a7a); border-radius:24px; padding:32px; color:var(--white); }
+  .payment-summary h3 { font-family:'Playfair Display',serif; font-size:20px; color:var(--gold-light); margin-bottom:24px; }
+  .fee-list { list-style:none; }
+  .fee-list li { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:14px; color:rgba(255,255,255,0.8); }
+  .fee-list li:last-child { border:none; color:var(--gold-light); font-weight:700; font-size:16px; }
+  .payment-note { background:rgba(200,151,42,0.15); border-left:3px solid var(--gold); padding:14px 16px; border-radius:8px; font-size:13px; color:rgba(255,255,255,0.8); margin-top:20px; line-height:1.6; }
+
+  /* CONTACT / FOOTER */
+  #contact { background:var(--navy); padding:60px 24px 0; }
+  .contact-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px; padding-bottom:48px; }
+  .contact-brand .logo { font-family:'Playfair Display',serif; font-size:22px; color:var(--white); font-weight:700; margin-bottom:12px; }
+  .contact-brand .tagline { color:rgba(255,255,255,0.6); font-size:14px; line-height:1.7; max-width:280px; margin-bottom:20px; }
+  .social-links { display:flex; gap:10px; }
+  .social-link { width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:18px; text-decoration:none; transition:all 0.2s; }
+  .social-link:hover { background:var(--gold); transform:translateY(-2px); }
+  .contact-col h4 { color:var(--gold-light); font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+  .contact-col ul { list-style:none; }
+  .contact-col ul li { margin-bottom:10px; }
+  .contact-col ul li a { color:rgba(255,255,255,0.65); text-decoration:none; font-size:14px; transition:color 0.2s; }
+  .contact-col ul li a:hover { color:var(--gold-light); }
+  .contact-col .info-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; color:rgba(255,255,255,0.65); font-size:14px; line-height:1.5; }
+  .contact-col .info-item .iicon { font-size:16px; flex-shrink:0; margin-top:1px; }
+  .footer-bar { border-top:1px solid rgba(255,255,255,0.08); padding:20px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  .footer-bar p { color:rgba(255,255,255,0.4); font-size:13px; }
+
+  /* MOBILE NAV */
+  .mobile-menu { display:none; flex-direction:column; padding:12px 24px 20px; border-top:1px solid rgba(255,255,255,0.1); }
+  .mobile-menu a { color:rgba(255,255,255,0.82); text-decoration:none; font-size:15px; font-weight:500; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .mobile-menu a:last-child { border:none; }
+
+  /* TOAST */
+  .toast {
+    position:fixed; bottom:24px; right:24px; background:var(--navy); color:var(--white);
+    padding:14px 24px; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.2);
+    font-size:14px; z-index:9999; transform:translateY(80px); opacity:0; transition:all 0.4s;
+    border-left:4px solid var(--gold);
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+
+  /* RESPONSIVE */
+  @media (max-width:900px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .about-grid, .payment-grid { grid-template-columns:1fr; }
+    .principal-card { flex-direction:column; text-align:center; padding:32px 24px; }
+    .contact-grid { grid-template-columns:1fr 1fr; }
+    .form-row { grid-template-columns:1fr; }
+  }
+  @media (max-width:600px) {
+    section { padding:60px 16px; }
+    .contact-grid { grid-template-columns:1fr; }
+    .hero-stats { gap:28px; }
+    .fee-types { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <div class="emblem">JN</div>
+      <div class="logo-text">
+        <div class="top">Jag Narayan Academy</div>
+        <div class="sub">Est. Since 2015 · JAGDISHPUR</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#principal">Principal</a>
+      <a href="#teachers">Teachers</a>
+      <a href="#syllabus">Syllabus</a>
+      <a href="#exams">Exams</a>
+      <a href="#payment">Fees</a>
+      <a href="#contact">Contact</a>
+      <a href="#admission" class="btn-admit">Apply Now</a>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#principal" onclick="toggleMenu()">Principal</a>
+    <a href="#teachers" onclick="toggleMenu()">Teachers</a>
+    <a href="#syllabus" onclick="toggleMenu()">Syllabus</a>
+    <a href="#exams" onclick="toggleMenu()">Exam Schedule</a>
+    <a href="#payment" onclick="toggleMenu()">Pay Fees</a>
+    <a href="#admission" onclick="toggleMenu()">🎓 Apply for Admission</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-badge">🎓 Admissions Open 2025–26</div>
+  <h1 class="hero-title">Jag Narayan<br><span>Academy</span></h1>
+  <p class="hero-sub">Shaping young minds with excellence in education, character, and leadership since 1995. Classes I to X.</p>
+  <div class="hero-btns">
+    <a href="#admission" class="btn-primary">Apply for Admission</a>
+    <a href="#about" class="btn-outline">Explore School</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">1500+</div><div class="lbl">Students</div></div>
+    <div class="stat"><div class="num">50+</div><div class="lbl">Faculty</div></div>
+    <div class="stat"><div class="num">30</div><div class="lbl">Years Legacy</div></div>
+    <div class="stat"><div class="num">Class I–X</div><div class="lbl">All Boards</div></div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 60L60 50C120 40 240 20 360 15C480 10 600 20 720 27.5C840 35 960 40 1080 37.5C1200 35 1320 25 1380 20L1440 15V60H0Z" fill="#fdf8f0"/>
+  </svg>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title">Excellence in Every Classroom</h2>
+    <p class="section-desc">Jag Narayan Academy is a leading CBSE-affiliated school in Kanpur, dedicated to holistic development of students from Class I to X.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Our Mission & Vision</h3>
+        <p>We believe every child carries infinite potential. Our mission is to nurture academic brilliance, moral values, and creative thinking in a supportive environment that inspires lifelong learners and responsible citizens.</p>
+        <br>
+        <p>With state-of-the-art labs, experienced teachers, and a curriculum designed to meet modern challenges — we prepare students not just for exams, but for life.</p>
+      </div>
+      <div class="about-features">
+        <div class="feature-item">
+          <div class="feature-icon">📚</div>
+          <div>
+            <h4>CBSE Affiliated Curriculum</h4>
+            <p>Comprehensive curriculum from Class I to X following CBSE guidelines with regular updates.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔬</div>
+          <div>
+            <h4>Modern Science Labs</h4>
+            <p>Fully equipped Physics, Chemistry and Biology labs for hands-on learning experience.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🏆</div>
+          <div>
+            <h4>Sports & Extra-Curricular</h4>
+            <p>Cricket ground, indoor games, music, dance, and annual cultural events.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💻</div>
+          <div>
+            <h4>Digital Smart Classes</h4>
+            <p>Interactive smart boards and computer lab with high-speed internet for every classroom.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPAL -->
+<section id="principal">
+  <div class="container">
+    <div class="section-label">Leadership</div>
+    <h2 class="section-title">Message from the Principal</h2>
+    <div class="principal-card">
+      <div class="principal-avatar">👨‍💼</div>
+      <div class="principal-info">
+        <blockquote>"Education is not just about filling a bucket — it is about lighting a fire. At Jag Narayan Academy, we strive to kindle curiosity, courage, and compassion in every student. Our doors are open to all children who dream of a bright future."</blockquote>
+        <div class="name"> MR. SAURABH SIR</div>
+        <div class="role">Principal, Jag Narayan Academy</div>
+        <div style="color:var(--gray);font-size:13px;margin-top:6px;">M.Ed., Ph.D. Education | 25+ Years Experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHERS -->
+<section id="teachers">
+  <div class="container">
+    <div class="section-label">Our Faculty</div>
+    <h2 class="section-title">Meet Our Dedicated Teachers</h2>
+    <p class="section-desc">Experienced, qualified, and passionate educators committed to student success.</p>
+    <div class="teachers-grid">
+      <div class="teacher-card">
+        <div class="teacher-avatar">👩‍🏫</div>
+        <h4>Mrs. Sunita Sharma</h4>
+        <div class="subject">Mathematics</div>
+        <div class="exp">15 Years Experience</div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-avatar">👨‍🏫</div>
+        <h4>Mr. Arvind Mishra</h4>
+        <div class="subject">Science</div>
+        <div class="exp">12 Years Experience</div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-avatar">👩‍🏫</div>
+        <h4>Mrs. Priya Verma</h4>
+        <div class="subject">English</div>
+        <div class="exp">10 Years Experience</div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-avatar">👨‍🏫</div>
+        <h4>Mr. Suresh Yadav</h4>
+        <div class="subject">Hindi & Social Studies</div>
+        <div class="exp">18 Years Experience</div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-avatar">👩‍🏫</div>
+        <h4>Mrs. Anjali Singh</h4>
+        <div class="subject">Computer Science</div>
+        <div class="exp">8 Years Experience</div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-avatar">👨‍🏫</div>
+        <h4>Mr. Deepak Tiwari</h4>
+        <div class="subject">Physical Education</div>
+        <div class="exp">14 Years Experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYLLABUS -->
+<section id="syllabus">
+  <div class="container">
+    <div class="section-label">Academics</div>
+    <h2 class="section-title">Class Syllabus (Class I – X)</h2>
+    <p class="section-desc">Click on a class to view its syllabus. Admin can upload syllabus PDFs for each class.</p>
+    <div class="syllabus-tabs" id="syllabusTabs"></div>
+    <div id="syllabusContents"></div>
+    <div class="upload-area" onclick="document.getElementById('syllabusUpload').click()">
+      <div class="upload-icon">📂</div>
+      <h4>Upload Syllabus PDF</h4>
+      <p>Click to upload or drag & drop a syllabus PDF for any class (Admin only)</p>
+      <input type="file" id="syllabusUpload" accept=".pdf" onchange="handleUpload(this)">
+    </div>
+  </div>
+</section>
+
+<!-- EXAMS -->
+<section id="exams">
+  <div class="container">
+    <div class="section-label">Examination</div>
+    <h2 class="section-title">Exam Schedule 2025–26</h2>
+    <p class="section-desc">Stay updated with all upcoming examination dates and timings.</p>
+    <div class="exam-grid">
+      <div class="exam-card">
+        <div class="exam-type">📝 Unit Test</div>
+        <h3>Unit Test – I</h3>
+        <div class="exam-row"><span class="lbl">📅 Dates</span><span class="val">15 July – 20 July 2025</span></div>
+        <div class="exam-row"><span class="lbl">⏰ Timings</span><span class="val">9:00 AM – 11:00 AM</span></div>
+        <div class="exam-row"><span class="lbl">📋 Syllabus</span><span class="val">Chapters 1–4 (All Subjects)</span></div>
+        <span class="classes-tag">Class I – X</span>
+      </div>
+      <div class="exam-card">
+        <div class="exam-type">📝 Half Yearly</div>
+        <h3>Half Yearly Exam</h3>
+        <div class="exam-row"><span class="lbl">📅 Dates</span><span class="val">20 Sep – 30 Sep 2025</span></div>
+        <div class="exam-row"><span class="lbl">⏰ Timings</span><span class="val">9:00 AM – 12:00 PM</span></div>
+        <div class="exam-row"><span class="lbl">📋 Syllabus</span><span class="val">April–September Syllabus</span></div>
+        <span class="classes-tag">Class I – X</span>
+      </div>
+      <div class="exam-card">
+        <div class="exam-type">📝 Unit Test</div>
+        <h3>Unit Test – II</h3>
+        <div class="exam-row"><span class="lbl">📅 Dates</span><span class="val">20 Nov – 25 Nov 2025</span></div>
+        <div class="exam-row"><span class="lbl">⏰ Timings</span><span class="val">9:00 AM – 11:00 AM</span></div>
+        <div class="exam-row"><span class="lbl">📋 Syllabus</span><span class="val">Chapters 5–8 (All Subjects)</span></div>
+        <span class="classes-tag">Class I – X</span>
+      </div>
+      <div class="exam-card">
+        <div class="exam-type">🏆 Annual</div>
+        <h3>Annual Examination</h3>
+        <div class="exam-row"><span class="lbl">📅 Dates</span><span class="val">1 Mar – 15 Mar 2026</span></div>
+        <div class="exam-row"><span class="lbl">⏰ Timings</span><span class="val">9:00 AM – 12:00 PM</span></div>
+        <div class="exam-row"><span class="lbl">📋 Syllabus</span><span class="val">Full Year Syllabus</span></div>
+        <span class="classes-tag">Class I – X</span>
+      </div>
+      <div class="exam-card">
+        <div class="exam-type">📖 Pre-Board</div>
+        <h3>Pre-Board Examination</h3>
+        <div class="exam-row"><span class="lbl">📅 Dates</span><span class="val">10 Jan – 20 Jan 2026</span></div>
+        <div class="exam-row"><span class="lbl">⏰ Timings</span><span class="val">9:00 AM – 12:00 PM</span></div>
+        <div class="exam-row"><span class="lbl">📋 Syllabus</span><span class="val">Complete Board Syllabus</span></div>
+        <span class="classes-tag">Class IX – X Only</span>
+      </div>
+      <div class="exam-card">
+        <div class="exam-type">🎤 Practical</div>
+        <h3>Practical Exams</h3>
+        <div class="exam-row"><span class="lbl">📅 Dates</span><span class="val">5 Feb – 12 Feb 2026</span></div>
+        <div class="exam-row"><span class="lbl">⏰ Timings</span><span class="val">9:00 AM – 1:00 PM</span></div>
+        <div class="exam-row"><span class="lbl">📋 Subjects</span><span class="val">Science, Computer, PT</span></div>
+        <span class="classes-tag">Class VI – X</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSION FORM -->
+<section id="admission">
+  <div class="container">
+    <div class="section-label">Admissions 2025–26</div>
+    <h2 class="section-title">Online Admission Form</h2>
+    <p class="section-desc">Fill in the details below to apply for admission. Our team will contact you within 48 hours.</p>
+    <div class="form-card">
+      <div class="form-step-indicator">
+        <div class="step-item">
+          <div class="step-circle active" id="step1Circ">1</div>
+          <div class="step-label active" id="step1Lbl">Student Info</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle" id="step2Circ">2</div>
+          <div class="step-label" id="step2Lbl">Parent Details</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle" id="step3Circ">3</div>
+          <div class="step-label" id="step3Lbl">Review & Submit</div>
+        </div>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="form-page active" id="formPage1">
+        <div class="form-section-title">Student Information</div>
+        <div class="form-row">
+          <div class="form-group"><label>First Name *</label><input type="text" placeholder="e.g. Rahul" id="f_fname"></div>
+          <div class="form-group"><label>Last Name *</label><input type="text" placeholder="e.g. Sharma" id="f_lname"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Date of Birth *</label><input type="date" id="f_dob"></div>
+          <div class="form-group"><label>Gender *</label>
+            <select id="f_gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Applying for Class *</label>
+            <select id="f_class"><option value="">Select Class</option>
+              <option>Class I</option><option>Class II</option><option>Class III</option><option>Class IV</option><option>Class V</option>
+              <option>Class VI</option><option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Previous School (if any)</label><input type="text" placeholder="Previous school name" id="f_prev"></div>
+        </div>
+        <div class="form-group"><label>Residential Address *</label><textarea placeholder="Enter full address with city and PIN code" id="f_address"></textarea></div>
+        <div class="form-nav"><div></div><button class="btn-form-next" onclick="nextStep(1)">Next: Parent Details →</button></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-page" id="formPage2">
+        <div class="form-section-title">Parent / Guardian Information</div>
+        <div class="form-row">
+          <div class="form-group"><label>Father's Name *</label><input type="text" placeholder="Father's full name" id="f_father"></div>
+          <div class="form-group"><label>Mother's Name *</label><input type="text" placeholder="Mother's full name" id="f_mother"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Contact Number *</label><input type="tel" placeholder="10-digit mobile number" id="f_phone"></div>
+          <div class="form-group"><label>Email Address *</label><input type="email" placeholder="your@email.com" id="f_email"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Father's Occupation</label><input type="text" placeholder="e.g. Business / Service" id="f_occ"></div>
+          <div class="form-group"><label>Annual Family Income</label>
+            <select id="f_income"><option value="">Select range</option><option>Below ₹2 Lakh</option><option>₹2–5 Lakh</option><option>₹5–10 Lakh</option><option>Above ₹10 Lakh</option></select>
+          </div>
+        </div>
+        <div class="form-group"><label>Any Special Requirements / Medical Information</label><textarea placeholder="e.g. allergies, special needs, etc." id="f_notes"></textarea></div>
+        <div class="form-nav">
+          <button class="btn-form-prev" onclick="prevStep(2)">← Back</button>
+          <button class="btn-form-next" onclick="nextStep(2)">Next: Review →</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-page" id="formPage3">
+        <div class="form-section-title">Review & Submit</div>
+        <div id="reviewSummary" style="background:var(--light-bg);border-radius:14px;padding:24px;margin-bottom:24px;font-size:14px;line-height:2;color:var(--navy);"></div>
+        <div class="form-group" style="display:flex;gap:12px;align-items:flex-start;">
+          <input type="checkbox" id="f_agree" style="width:18px;height:18px;margin-top:3px;flex-shrink:0;">
+          <label for="f_agree" style="font-size:14px;font-weight:400;color:var(--gray);cursor:pointer;">I confirm that the above information is true and correct. I agree to the <a href="#" style="color:var(--gold);">Terms & Conditions</a> and <a href="#" style="color:var(--gold);">School Rules</a> of Jag Narayan Academy.</label>
+        </div>
+        <div class="form-nav">
+          <button class="btn-form-prev" onclick="prevStep(3)">← Back</button>
+          <button class="btn-form-next" onclick="submitForm()" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);">🎓 Submit Application</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment">
+  <div class="container">
+    <div class="section-label">Fee Payment</div>
+    <h2 class="section-title">Pay School Fees Online</h2>
+    <p class="section-desc">Securely pay admission, tuition, or exam fees online using UPI, Net Banking, or Card.</p>
+    <div class="payment-grid">
+      <div class="payment-form-card">
+        <h3>💳 Online Fee Payment</h3>
+        <label style="margin-bottom:10px;display:block;">Select Fee Type</label>
+        <div class="fee-types">
+          <div class="fee-type-btn active" onclick="selectFee(this,'Admission Fee','₹2,500')"><div class="ficon">🎓</div><div class="fname">Admission Fee</div></div>
+          <div class="fee-type-btn" onclick="selectFee(this,'Tuition Fee (Monthly)','₹1,800')"><div class="ficon">📚</div><div class="fname">Tuition Fee</div></div>
+          <div class="fee-type-btn" onclick="selectFee(this,'Exam Fee','₹500')"><div class="ficon">📝</div><div class="fname">Exam Fee</div></div>
+          <div class="fee-type-btn" onclick="selectFee(this,'Annual Fee','₹3,200')"><div class="ficon">🏫</div><div class="fname">Annual Fee</div></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Student Name *</label><input type="text" placeholder="Full name of student" id="p_name"></div>
+          <div class="form-group"><label>Class *</label>
+            <select id="p_class"><option value="">Select</option>
+              <option>Class I</option><option>Class II</option><option>Class III</option><option>Class IV</option><option>Class V</option>
+              <option>Class VI</option><option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Roll No. / Admission No.</label><input type="text" placeholder="e.g. JNA-2025-001" id="p_roll"></div>
+        <label>Payment Method</label>
+        <div class="payment-methods">
+          <div class="pm-btn active" onclick="selectPM(this)">📱 UPI</div>
+          <div class="pm-btn" onclick="selectPM(this)">🏦 Net Banking</div>
+          <div class="pm-btn" onclick="selectPM(this)">💳 Card</div>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="initiatePayment()">Proceed to Pay <span id="payAmount">₹2,500</span></button>
+        <div class="secure-badge">🔒 <span>256-bit SSL secured payment · Powered by Razorpay</span></div>
+      </div>
+      <div class="payment-summary">
+        <h3>Fee Structure 2025–26</h3>
+        <ul class="fee-list">
+          <li><span>Admission Fee (One-time)</span><span>₹2,500</span></li>
+          <li><span>Tuition Fee (Monthly)</span><span>₹1,800</span></li>
+          <li><span>Annual/Development Fee</span><span>₹3,200</span></li>
+          <li><span>Exam Fee (Per Exam)</span><span>₹500</span></li>
+          <li><span>Computer Lab Fee (Annual)</span><span>₹800</span></li>
+          <li><span>Approx. Annual Total</span><span>₹28,100</span></li>
+        </ul>
+        <div class="payment-note">💡 Fee concessions available for meritorious and economically weaker students. Contact the school office for details.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / FOOTER -->
+<footer id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-brand">
+        <div class="logo">Jag Narayan Academy</div>
+        <p class="tagline">Nurturing excellence, building futures. A school where every child finds their spark.</p>
+        <div class="social-links">
+          <a class="social-link" href="#">📘</a>
+          <a class="social-link" href="#">📸</a>
+          <a class="social-link" href="#">🐦</a>
+          <a class="social-link" href="#">▶️</a>
+        </div>
+      </div>
+      <div class="contact-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About School</a></li>
+          <li><a href="#admission">Apply for Admission</a></li>
+          <li><a href="#syllabus">Syllabus</a></li>
+          <li><a href="#exams">Exam Schedule</a></li>
+          <li><a href="#payment">Pay Fees</a></li>
+          <li><a href="#teachers">Our Teachers</a></li>
+        </ul>
+      </div>
+      <div class="contact-col">
+        <h4>Contact Us</h4>
+        <div class="info-item"><span class="iicon">📍</span><span>Near Naubasta Chauraha, Kanpur, Uttar Pradesh – 208021</span></div>
+        <div class="info-item"><span class="iicon">📞</span><span>+91 98765 43210<br>+91 05122 345678</span></div>
+        <div class="info-item"><span class="iicon">📧</span><span>info@jagnarayanacademy.edu.in</span></div>
+        <div class="info-item"><span class="iicon">⏰</span><span>Mon–Sat: 8:00 AM – 4:00 PM</span></div>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <p>© 2025 Jag Narayan Academy, Kanpur. All rights reserved.</p>
+      <p>Made with ❤️ for quality education</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Mobile Nav
+function toggleMenu() {
+  const m = document.getElementById('mobileMenu');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Syllabus
+const syllabusData = {
+  'I': ['English','Hindi','Mathematics','Environmental Science','Drawing & Art'],
+  'II': ['English','Hindi','Mathematics','Environmental Science','Drawing & Art'],
+  'III': ['English','Hindi','Mathematics','Environmental Science','Computer Basics','Drawing'],
+  'IV': ['English','Hindi','Mathematics','Science','Social Studies','Computer','Drawing'],
+  'V': ['English','Hindi','Mathematics','Science','Social Studies','Computer','Drawing'],
+  'VI': ['English','Hindi','Mathematics','Science','Social Science','Sanskrit','Computer'],
+  'VII': ['English','Hindi','Mathematics','Science','Social Science','Sanskrit','Computer'],
+  'VIII': ['English','Hindi','Mathematics','Science','Social Science','Sanskrit','Computer'],
+  'IX': ['English','Hindi','Mathematics','Science','Social Science','Sanskrit/IT','Physical Education'],
+  'X': ['English','Hindi','Mathematics','Science','Social Science','Sanskrit/IT','Physical Education']
+};
+const subjectIcons = {'English':'📖','Hindi':'🇮🇳','Mathematics':'📐','Science':'🔬','Social Science':'🌍','Social Studies':'🌍','Environmental Science':'🌿','Computer Basics':'💻','Computer':'💻','Drawing':'🎨','Drawing & Art':'🎨','Sanskrit':'🕉️','Sanskrit/IT':'🕉️','Physical Education':'⚽','IT':'💾'};
+
+const tabsDiv = document.getElementById('syllabusTabs');
+const contentsDiv = document.getElementById('syllabusContents');
+const classes = Object.keys(syllabusData);
+
+classes.forEach((cls, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn' + (i===0?' active':'');
+  btn.textContent = 'Class ' + cls;
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.syllabus-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('sc_' + cls).classList.add('active');
+  };
+  tabsDiv.appendChild(btn);
+
+  const cont = document.createElement('div');
+  cont.className = 'syllabus-content' + (i===0?' active':'');
+  cont.id = 'sc_' + cls;
+  syllabusData[cls].forEach(sub => {
+    cont.innerHTML += `<div class="subject-card"><span class="icon">${subjectIcons[sub]||'📄'}</span><div class="info"><div class="name">${sub}</div><div class="detail">Class ${cls} · CBSE</div></div></div>`;
+  });
+  contentsDiv.appendChild(cont);
+});
+
+// Upload handler
+function handleUpload(input) {
+  if(input.files[0]) showToast('✅ Syllabus PDF uploaded successfully!');
+}
+
+// Fee selection
+let selectedFee = '₹2,500';
+function selectFee(el, name, amount) {
+  document.querySelectorAll('.fee-type-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  selectedFee = amount;
+  document.getElementById('payAmount').textContent = amount;
+}
+function selectPM(el) {
+  document.querySelectorAll('.pm-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Payment
+function initiatePayment() {
+  const name = document.getElementById('p_name').value.trim();
+  const cls = document.getElementById('p_class').value;
+  if(!name || !cls) { showToast('⚠️ Please fill in student name and class.'); return; }
+  showToast('🔒 Redirecting to secure payment gateway... (' + selectedFee + ')');
+}
+
+// Multi-step form
+let currentStep = 1;
+function nextStep(step) {
+  if(step === 1) {
+    const fn = document.getElementById('f_fname').value.trim();
+    const ln = document.getElementById('f_lname').value.trim();
+    const cls = document.getElementById('f_class').value;
+    if(!fn || !ln || !cls) { showToast('⚠️ Please fill all required fields.'); return; }
+  }
+  if(step === 2) {
+    const fa = document.getElementById('f_father').value.trim();
+    const ph = document.getElementById('f_phone').value.trim();
+    const em = document.getElementById('f_email').value.trim();
+    if(!fa || !ph || !em) { showToast('⚠️ Please fill all required fields.'); return; }
+    buildReview();
+  }
+  document.getElementById('formPage'+step).classList.remove('active');
+  document.getElementById('formPage'+(step+1)).classList.add('active');
+  markStep(step, step+1);
+}
+function prevStep(step) {
+  document.getElementById('formPage'+step).classList.remove('active');
+  document.getElementById('formPage'+(step-1)).classList.add('active');
+  markStep(step-1, step-1);
+}
+function markStep(done, current) {
+  for(let i=1;i<=3;i++) {
+    const c = document.getElementById('step'+i+'Circ');
+    const l = document.getElementById('step'+i+'Lbl');
+    c.className = 'step-circle' + (i<current?' done':i===current?' active':'');
+    l.className = 'step-label' + (i===current?' active':'');
+    if(i<current) c.textContent = '✓';
+    else c.textContent = i;
+  }
+}
+function buildReview() {
+  document.getElementById('reviewSummary').innerHTML = `
+    <b>Student Name:</b> ${document.getElementById('f_fname').value} ${document.getElementById('f_lname').value}<br>
+    <b>Date of Birth:</b> ${document.getElementById('f_dob').value || 'Not provided'}<br>
+    <b>Gender:</b> ${document.getElementById('f_gender').value || 'Not selected'}<br>
+    <b>Applying for:</b> ${document.getElementById('f_class').value}<br>
+    <b>Previous School:</b> ${document.getElementById('f_prev').value || 'N/A'}<br>
+    <b>Father's Name:</b> ${document.getElementById('f_father').value}<br>
+    <b>Contact:</b> ${document.getElementById('f_phone').value}<br>
+    <b>Email:</b> ${document.getElementById('f_email').value}<br>
+    <b>Address:</b> ${document.getElementById('f_address').value || 'Not provided'}
+  `;
+}
+function submitForm() {
+  if(!document.getElementById('f_agree').checked) { showToast('⚠️ Please agree to terms & conditions.'); return; }
+  showToast('🎉 Application submitted! We will contact you within 48 hours.');
+  setTimeout(() => {
+    document.getElementById('formPage3').innerHTML = `
+      <div style="text-align:center;padding:40px 0;">
+        <div style="font-size:64px;margin-bottom:16px;">🎓</div>
+        <h3 style="font-family:Playfair Display,serif;font-size:26px;color:var(--navy);margin-bottom:12px;">Application Submitted!</h3>
+        <p style="color:var(--gray);font-size:15px;max-width:400px;margin:0 auto 24px;line-height:1.7;">Thank you for applying to Jag Narayan Academy. Our admission team will review your application and contact you within 48 working hours.</p>
+        <div style="background:var(--light-bg);border-radius:12px;padding:16px 24px;display:inline-block;font-size:14px;color:var(--navy);">📋 Application Reference: <b>JNA-2025-${Math.floor(Math.random()*9000+1000)}</b></div>
+      </div>`;
+  }, 800);
+}
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
